@@ -146,6 +146,7 @@ public class PluggableSchemaResolver implements EntityResolver {
 	 */
 	private Map<String, String> getSchemaMappings() {
 		Map<String, String> schemaMappings = this.schemaMappings;
+		// 双重检查锁 实现schemaMappings单例模式
 		if (schemaMappings == null) {
 			synchronized (this) {
 				schemaMappings = this.schemaMappings;

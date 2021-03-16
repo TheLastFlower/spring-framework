@@ -93,15 +93,19 @@ public class XmlValidationModeDetector {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 			boolean isDtdValidated = false;
 			String content;
+			// 逐行读取
 			while ((content = reader.readLine()) != null) {
 				content = consumeCommentTokens(content);
+				// 注释或者无内容
 				if (this.inComment || !StringUtils.hasText(content)) {
 					continue;
 				}
+				// 包含DOCTYPE 则为DTD模式
 				if (hasDoctype(content)) {
 					isDtdValidated = true;
 					break;
 				}
+				// 有'<' 且'<'后面跟着字母 则返回true
 				if (hasOpeningTag(content)) {
 					// End of meaningful data...
 					break;
